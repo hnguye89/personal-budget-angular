@@ -13,7 +13,7 @@ http.createServer(function (req, res) {
     console.log("Serving at http://localhost:3000");
 });*/
 
-const http = require('http');
+/*const http = require('http');
 
 http.createServer(function (req, res) {
     var url = req.url;
@@ -35,3 +35,24 @@ http.createServer(function (req, res) {
     console.log("Serving at http://localhost:3000");
 });
 
+*/
+
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World from Express!');
+});
+
+app.get('/about', (req, res) => {
+  res.send('About page');
+});
+
+app.get('/contact', (req, res) => {
+  res.send('Access not authorized');
+});
+
+app.listen(port, () => {
+  console.log(`Serving at http://localhost:${port}`)
+});
