@@ -37,7 +37,7 @@ http.createServer(function (req, res) {
 
 */
 
-const express = require('express');
+/*const express = require('express');
 const app = express();
 const port = 3000;
 
@@ -51,6 +51,28 @@ app.get('/about', (req, res) => {
 
 app.get('/contact', (req, res) => {
   res.send('Access not authorized');
+});
+
+app.listen(port, () => {
+  console.log(`Serving at http://localhost:${port}`)
+});*/
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => { res.send('Hello World from Express + Routing!'); });
+
+app.get('/about', (req, res) => { res.send('About page'); });
+
+app.post('/sum', (req, res) => {
+  const a = req.body.a;
+  const b = req.body.b;
+  const result = parseInt(a) + parseInt(b);
+  res.json({ 'The result is ': result});
 });
 
 app.listen(port, () => {
