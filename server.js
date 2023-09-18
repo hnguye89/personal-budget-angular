@@ -5,7 +5,7 @@ const port = 4000;
 app.use('/', express.static('public'));
 
 const budget = {
-  MyBudget: [
+  myBudget: [
     {
         title: 'Eat out',
         budget: 30

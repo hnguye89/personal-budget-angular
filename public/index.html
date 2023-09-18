@@ -6,6 +6,7 @@
     <title>Personal Budget</title>
     <link rel="stylesheet" href="/reset.css">
     <link rel="stylesheet" href="main.css">
+    
 </head>
 <body>
     <header>
@@ -54,9 +55,9 @@
             </div>
     
             <div class="text-box">
-                <h1>Free</h1>
+                <h1>D3JS</h1>
                 <p>
-                    This app is free!!! And you are the only one holding your data!
+                    <canvas id="/" width="400" heights="400"></canvas>
                 </p>
             </div>
     
@@ -86,9 +87,9 @@
             </div>
     
             <div class="text-box">
-                <h1>Free</h1>
+                <h1>Pie Chart</h1>
                 <p>
-                    <canvas id="MyChart" width="400" heights="400"></canvas>
+                    <canvas id="myChart" width="400" heights="400"></canvas>
                 </p>
             </div>
 
@@ -101,10 +102,13 @@
         <p><a href="#"> Back to top</a></p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>   
+     
+    
     <script>
-        var data = {
+        const dataSource = {
             labels: [
                 'Eat out',
                 'Rent',
@@ -115,29 +119,41 @@
                 'Medicine'
             ],
             datasets: [{
-                label: 'My First Dataset',
+                label: 'Budget',
                 data: [30, 350, 90, 50, 70, 500, 100],
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    '#88e2f9',
-                    '#e8ff2d',
-                    '#7435dc',
-                    '#da8cdc'
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
                 ],
-                hoverOffset: 7
+                hoverOffset: 4
              }]
          };
 
          function createChart() {
-            var ctx = document.getElementById("MyChart").getContext("2d");
+            var ctx = document.getElementById("myChart").getContext("2d");
             var myPieChart = new Chart(ctx, {
                 type: 'pie',
-                data: data
+                data: dataSource
             });
          }
-         createChart();
+
+         function getBudget(){
+            axios.get('/budget')
+            .then(function (res){
+                console.log(res.data);
+                for(var i = 0; i < res.data.myBudget.length; i++){
+                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                    dataSource.labels[i] = res.data.myBudget[i].title;
+                }
+                createChart();
+            })
+         }
+         getBudget();
     </script>
     
 </body>
