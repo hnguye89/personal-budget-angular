@@ -88,7 +88,7 @@
             <div class="text-box">
                 <h1>Free</h1>
                 <p>
-                    This app is free!!! And you are the only one holding your data!
+                    <canvas id="MyChart" width="400" heights="400"></canvas>
                 </p>
             </div>
 
@@ -101,5 +101,44 @@
         <p><a href="#"> Back to top</a></p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var data = {
+            labels: [
+                'Eat out',
+                'Rent',
+                'Groceries', 
+                'Entertainment',
+                'Healthcare',
+                'Housing',
+                'Medicine'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [30, 350, 90, 50, 70, 500, 100],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    '#88e2f9',
+                    '#e8ff2d',
+                    '#7435dc',
+                    '#da8cdc'
+                ],
+                hoverOffset: 7
+             }]
+         };
+
+         function createChart() {
+            var ctx = document.getElementById("MyChart").getContext("2d");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data
+            });
+         }
+         createChart();
+    </script>
+    
 </body>
 </html>
