@@ -55,12 +55,14 @@
             </div>
     
             <div class="text-box">
-                <h1>D3JS</h1>
+                <h1>Results</h1>
                 <p>
-                    <canvas id="/" width="400" heights="400"></canvas>
+                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
+                    Also, they to live happier lives... since they expend without guilt or fear... 
+                    because they know it is all good and accounted for.
                 </p>
             </div>
-    
+
             <div class="text-box">
                 <h1>Stay on track</h1>
                 <p>
@@ -78,12 +80,8 @@
             </div>
     
             <div class="text-box">
-                <h1>Results</h1>
-                <p>
-                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                    Also, they to live happier lives... since they expend without guilt or fear... 
-                    because they know it is all good and accounted for.
-                </p>
+                <h1>Donut Chart</h1>
+                <div id="d3chart"></div>
             </div>
     
             <div class="text-box">
@@ -154,6 +152,47 @@
             })
          }
          getBudget();
+    </script>
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+    <script>
+        var width = 450
+            height = 450
+            margin = 40
+
+        var radius = Math.min(width, height) / 2 - margin
+
+        var svg = d3.select("#d3chart")
+        .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+        .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+        var data = {a: 30, b: 350, c:90, d:50, e:70, f:500, g:100}
+        var color = d3.scaleOrdinal()
+        .domain(data)
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#da8cdc", "#85e4ee" ])
+
+        var pie = d3.pie()
+        .value(function(d) {return d.value; })
+        var data_ready = pie(d3.entries(data))
+
+        svg
+        .selectAll('whatever')
+        .data(data_ready)
+        .enter()
+        .append('path')
+        .attr('d', d3.arc()
+            .innerRadius(100)    
+            .outerRadius(radius)
+        )
+        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.7)
     </script>
     
 </body>
